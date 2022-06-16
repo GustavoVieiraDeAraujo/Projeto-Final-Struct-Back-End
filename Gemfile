@@ -28,6 +28,8 @@ gem 'bootsnap', '>= 1.4.4', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
 end
 
 group :development do
@@ -38,3 +40,13 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+# Para facilitar a configuração segura de senha
+gem 'figaro'
+
+# Para sistema de usuario e admin com autenticação
+gem 'simple_token_authentication'
+gem 'devise'
+
+# Minimizar informações inuteis
+gem 'active_model_serializers'
