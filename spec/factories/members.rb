@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :member do
-    name { "MyString" }
-    age { 1 }
-    office { nil }
+    name { "Membro 1" }
+    age { 2022 }
+    office { create(:office) }
   end
 end

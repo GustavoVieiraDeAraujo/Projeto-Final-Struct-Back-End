@@ -1,4 +1,6 @@
 class Api::V1::OfficesController < ApplicationController
+    
+    acts_as_token_authentication_handler_for Administrator, only: [:create, :update, :delete]
 
     def index
         offices = Office.all
@@ -8,7 +10,11 @@ class Api::V1::OfficesController < ApplicationController
     def index_pagination
         size_page = 5
         offices = Office.all.limit(size_page).offset((params[:page].to_i-1)*size_page)
-        render json: offices, status: :ok
+        if offices.empty?
+            return render json: {error: "Pagina invalida"}, status: :bad_request
+        else
+            return render json: offices, status: :ok
+        end
     rescue StandardError => e
         render json: e, status: :bad_request
     end
