@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :office do
-    name { "MyString" }
-    description { "MyText" }
+    name { "Office 1" }
+    description { "Office 1" }
   end
 end

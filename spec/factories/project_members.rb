@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :project_member do
-    role { "MyString" }
-    member { nil }
-    project { nil }
+    role { "Role 1" }
+    member { create(:member) }
+    project { create(:project) }
   end
 end

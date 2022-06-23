@@ -3,4 +3,6 @@ class Member < ApplicationRecord
   belongs_to :office
   has_many :project_members, dependent: :destroy
   #has_many :projects, through: :project_members
+
+  has_one_attached :photo
 end

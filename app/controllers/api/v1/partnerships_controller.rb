@@ -1,5 +1,7 @@
 class Api::V1::PartnershipsController < ApplicationController
 
+    acts_as_token_authentication_handler_for Administrator, only: [:create, :update, :delete]
+
     def index
         partnerships = Partnership.all
         render json: partnerships, status: :ok
@@ -8,7 +10,11 @@ class Api::V1::PartnershipsController < ApplicationController
     def index_pagination
         size_page = 5
         partnerships = Partnership.all.limit(size_page).offset((params[:page].to_i-1)*size_page)
-        render json: partnerships, status: :ok
+        if partnerships.empty?
+            return render json: {error: "Pagina invalida"}, status: :bad_request
+        else
+            return render json: partnerships, status: :ok
+        end
     rescue StandardError => e
         render json: e, status: :bad_request
     end
@@ -47,6 +53,6 @@ class Api::V1::PartnershipsController < ApplicationController
     private
 
     def partnerships_params 
-        params.require(:partnership).permit(:name, :link)
+        params.require(:partnership).permit(:name, :link, images: [])
     end
 end
