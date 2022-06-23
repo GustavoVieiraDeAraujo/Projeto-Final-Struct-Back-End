@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :service do
-    name { "MyString" }
-    description { "MyText" }
+    name { "Service 1" }
+    description { "Service 1" }
   end
 end

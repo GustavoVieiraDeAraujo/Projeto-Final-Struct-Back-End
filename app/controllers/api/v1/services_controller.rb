@@ -1,4 +1,6 @@
 class Api::V1::ServicesController < ApplicationController
+
+    acts_as_token_authentication_handler_for Administrator, only: [:create, :update, :delete]
     
     def index
         services = Service.all
@@ -8,7 +10,11 @@ class Api::V1::ServicesController < ApplicationController
     def index_pagination
         size_page = 5
         services = Service.all.limit(size_page).offset((params[:page].to_i-1)*size_page)
-        render json: services, status: :ok
+        if services.empty?
+            return render json: {error: "Pagina invalida"}, status: :bad_request
+        else
+            return render json: services, status: :ok
+        end
     rescue StandardError => e
         render json: e, status: :bad_request
     end
@@ -47,7 +53,7 @@ class Api::V1::ServicesController < ApplicationController
     private
     
     def services_params 
-        params.require(:service).permit(:name, :description)
+        params.require(:service).permit(:name, :description, images: [])
     end
 
 end

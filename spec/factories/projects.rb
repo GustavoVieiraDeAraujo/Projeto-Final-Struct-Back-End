@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :project do
-    name { "MyString" }
-    link { "MyString" }
-    description { "MyText" }
+    name { "Project 1" }
+    link { "Project 1" }
+    description { "Project 1" }
   end
 end

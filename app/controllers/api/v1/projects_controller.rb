@@ -1,5 +1,7 @@
 class Api::V1::ProjectsController < ApplicationController
 
+    acts_as_token_authentication_handler_for Administrator, only: [:create, :update, :delete]
+
     def index
         projects = Project.all
         render json: projects, status: :ok
@@ -8,7 +10,11 @@ class Api::V1::ProjectsController < ApplicationController
     def index_pagination
         size_page = 5
         projects = Project.all.limit(size_page).offset((params[:page].to_i-1)*size_page)
-        render json: projects, status: :ok
+        if projects.empty?
+            return render json: {error: "Pagina invalida"}, status: :bad_request
+        else
+            return render json: projects, status: :ok
+        end
     rescue StandardError => e
         render json: e, status: :bad_request
     end
