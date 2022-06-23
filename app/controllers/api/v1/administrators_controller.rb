@@ -1,4 +1,26 @@
 class Api::V1::AdministratorsController < ApplicationController
+
+    acts_as_token_authentication_handler_for Administrator, only: [:logout, :create, :delete, :update]
+    
+    def login
+        admin = Administrator.find_by!(email: params[:email])
+        if admin.valid_password?(params[:password])
+            render json: admin, status: :ok
+        else 
+            head(:unauthorized)
+        end
+    rescue StandardError => e
+        render json: {message: e.message}, status: :not_found
+    end
+
+    def logout
+        current_administrator.authentication_token = nil
+        current_administrator.save!
+        render json: {message:"Logout concluido com sucesso"}, status: :ok
+    rescue StandardError => e
+        render json: {message: e.message }, status: :bad_request
+    end
+
     def index
         admin = Administrator.all
         render json: admin, status: :ok
@@ -12,7 +34,7 @@ class Api::V1::AdministratorsController < ApplicationController
     end
 
     def create 
-        admin = Administrator.new(admin_params)
+        admin = Administrator.create!(admin_params)
         admin.save!
         render json: admin, status: :created
     rescue StandardError => e
@@ -38,6 +60,6 @@ class Api::V1::AdministratorsController < ApplicationController
     private
 
     def admin_params 
-        params.require(:member).permit(:name, :email)
+        params.require(:admin).permit(:name, :email, :password)
     end
 end

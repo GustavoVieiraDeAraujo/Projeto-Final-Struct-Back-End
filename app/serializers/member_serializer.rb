@@ -1,5 +1,6 @@
 class MemberSerializer < ActiveModel::Serializer
-  attributes :id, :name, :age, :office, :projects
+  include Rails.application.routes.url_helpers
+  attributes :id, :name, :age, :photo_url, :office, :projects
   
   def office
     array = {
@@ -20,4 +21,11 @@ class MemberSerializer < ActiveModel::Serializer
     end
     array
   end
+
+  def photo_url
+    if object.photo.attached?
+      rails_blob_path(object.photo, only_path: true)
+    end
+  end
+
 end

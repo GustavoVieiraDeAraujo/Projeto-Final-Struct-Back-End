@@ -22,6 +22,12 @@ Member.create!(name:"Member 4", age:2022, office_id:4)
 Member.create!(name:"Member 5", age:2022, office_id:5)
 Member.create!(name:"Member 6", age:2022, office_id:6)
 
+#Fotos membros
+Member.find_by(id:1).photo.attach(io: File.open("./public/luffy.jpg"), filename: "luffy.jpg")
+Member.find_by(id:2).photo.attach(io: File.open("./public/zoro.jpg"), filename: "zoro.jpg")
+Member.find_by(id:3).photo.attach(io: File.open("./public/usopp.jpg"), filename: "usopp.jpg")
+Member.find_by(id:4).photo.attach(io: File.open("./public/sanji.jpeg"), filename: "sanji.jpeg") 
+
 #Parcerias
 Partnership.create!(name:"Partnership 1", link:"Partnership 1")
 Partnership.create!(name:"Partnership 2", link:"Partnership 2")
@@ -29,6 +35,13 @@ Partnership.create!(name:"Partnership 3", link:"Partnership 3")
 Partnership.create!(name:"Partnership 4", link:"Partnership 4")
 Partnership.create!(name:"Partnership 5", link:"Partnership 5")
 Partnership.create!(name:"Partnership 6", link:"Partnership 6")
+
+#Imagens Parcerias
+Partnership.find_by(id:1).images.attach(io: File.open("./public/nasa.png"), filename: "nasa.png")
+Partnership.find_by(id:1).images.attach(io: File.open("./public/diretornasa.jpeg"), filename: "diretornasa.jpeg")
+Partnership.find_by(id:2).images.attach(io: File.open("./public/google.jpeg"), filename: "google.jpeg")
+Partnership.find_by(id:3).images.attach(io: File.open("./public/meta.png"), filename:"meta.png")
+Partnership.find_by(id:4).images.attach(io: File.open("./public/spotify.png"), filename: "spotify.png")
 
 #Projetos
 Project.create!(name:"Project 1", link:"Project 1", description:"Project 1")
@@ -61,4 +74,4 @@ ProjectMember.create!(member_id:6, project_id:2, role:"Role 11")
 ProjectMember.create!(member_id:4, project_id:2, role:"Role 12")
 
 #Administrador
-Administrator.create!(name:"Poderoso Chefão",email:"PoderosoChefão@PoderosoChefão.com.br", password:"123456789")
+Administrator.create!(name:"Poderoso Chefão",email:"poderosochefao@poderosochefao.com.br", password:"123456789")
