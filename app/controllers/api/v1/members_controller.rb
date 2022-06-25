@@ -1,6 +1,6 @@
 class Api::V1::MembersController < ApplicationController
 
-    acts_as_token_authentication_handler_for Administrator, only: [:create, :update, :delete]
+    acts_as_token_authentication_handler_for Administrator, only: [:create, :update, :delete, :add_photo]
 
     def index
         members = Member.all
@@ -17,6 +17,19 @@ class Api::V1::MembersController < ApplicationController
         end
     rescue StandardError => e
         render json: e, status: :bad_request
+    end
+
+    def add_photo
+        member = Member.find(params[:id])
+        if member.photo.attached?
+            member.photo.purge
+        end
+        params[:photo].each do |photo|
+            member.photo.attach(photo)
+        end
+        render json: member, status: :ok
+    rescue StandardError => e
+        render json: {message: e.message}, status: :bad_request
     end
 
     def show 
