@@ -1,6 +1,6 @@
 class Api::V1::ServicesController < ApplicationController
 
-    acts_as_token_authentication_handler_for Administrator, only: [:create, :update, :delete]
+    acts_as_token_authentication_handler_for Administrator, only: [:create, :update, :delete, :add_images, :delete_all_images]
     
     def index
         services = Service.all
@@ -17,6 +17,26 @@ class Api::V1::ServicesController < ApplicationController
         end
     rescue StandardError => e
         render json: e, status: :bad_request
+    end
+
+    def add_images
+        service = Service.find(params[:id])
+        params[:images].each do |image|
+            service.images.attach(image)
+        end
+        render json: service, status: :ok
+    rescue StandardError => e
+        render json: {message: e.message}, status: :bad_request
+    end
+
+    def delete_all_images
+        service = Service.find(params[:id])
+        service.images.each do |image|
+            service.images.purge(image)
+        end
+        render json: service, status: :ok
+    rescue StandardError => e
+        render json: {message: e.message}, status: :bad_request
     end
 
     def show 
