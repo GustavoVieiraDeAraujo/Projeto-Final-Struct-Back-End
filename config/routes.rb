@@ -9,6 +9,7 @@ Rails.application.routes.draw do
         get "index_pagination/:page", to: "members#index_pagination"
         get "show/:id", to: "members#show"
         post "create", to: "members#create"
+        post "add_photo/:id", to: "members#add_photo"
         patch "update/:id", to: "members#update"
         delete "delete/:id", to: "members#delete"
       end
@@ -27,8 +28,10 @@ Rails.application.routes.draw do
         get "index_pagination/:page", to: "services#index_pagination"
         get "show/:id", to: "services#show"
         post "create", to: "services#create"
+        post "add_images/:id", to: "services#add_images"
         patch "update/:id", to: "services#update"
         delete "delete/:id", to: "services#delete"
+        delete "delete_all_images/:id", to: "services#delete_all_images"
       end
 
       scope "partnerships" do
@@ -36,8 +39,10 @@ Rails.application.routes.draw do
         get "index_pagination/:page", to: "partnerships#index_pagination"
         get "show/:id", to: "partnerships#show"
         post "create", to: "partnerships#create"
+        post "add_images/:id", to: "partnerships#add_images"
         patch "update/:id", to: "partnerships#update"
         delete "delete/:id", to: "partnerships#delete"
+        delete "delete_all_images/:id", to: "partnerships#delete_all_images"
       end
 
       scope "projects" do

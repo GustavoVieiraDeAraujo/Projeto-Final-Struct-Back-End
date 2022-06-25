@@ -1,6 +1,6 @@
 class Api::V1::PartnershipsController < ApplicationController
 
-    acts_as_token_authentication_handler_for Administrator, only: [:create, :update, :delete]
+    acts_as_token_authentication_handler_for Administrator, only: [:create, :update, :delete, :add_images, :delete_all_images]
 
     def index
         partnerships = Partnership.all
@@ -17,6 +17,26 @@ class Api::V1::PartnershipsController < ApplicationController
         end
     rescue StandardError => e
         render json: e, status: :bad_request
+    end
+
+    def add_images
+        partnership = Partnership.find(params[:id])
+        params[:images].each do |image|
+            partnership.images.attach(image)
+        end
+        render json: partnership, status: :ok
+    rescue StandardError => e
+        render json: {message: e.message}, status: :bad_request
+    end
+
+    def delete_all_images
+        partnership = Partnership.find(params[:id])
+        partnership.images.each do |image|
+            partnership.images.purge(image)
+        end
+        render json: partnership, status: :ok
+    rescue StandardError => e
+        render json: {message: e.message}, status: :bad_request
     end
 
     def show 
