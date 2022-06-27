@@ -1,77 +1,52 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+require 'faker'
 
-#Office
-Office.create!(name:"Office 1", description:"Office 1")
-Office.create!(name:"Office 2", description:"Office 2")
-Office.create!(name:"Office 3", description:"Office 3")
-Office.create!(name:"Office 4", description:"Office 4")
-Office.create!(name:"Office 5", description:"Office 5")
-Office.create!(name:"Office 6", description:"Office 6")
+# link para conferir outros Fakers
+# https://github.com/faker-ruby/faker
 
-#Member
-Member.create!(name:"Member 1", age:2022, office_id:1)
-Member.create!(name:"Member 2", age:2022, office_id:2)
-Member.create!(name:"Member 3", age:2022, office_id:3)
-Member.create!(name:"Member 4", age:2022, office_id:4)
-Member.create!(name:"Member 5", age:2022, office_id:5)
-Member.create!(name:"Member 6", age:2022, office_id:6)
+#Criando cargos,parcerias,projetos,serviços,contatos
+30.times do |i|
+    Office.create!(name: Faker::Job.position  , description: Faker::Alphanumeric.unique.alphanumeric(number: 50))
+    Partnership.create!(name: Faker::Name.name, link: Faker::Internet.url)
+    Project.create!(name: Faker::Ancient.god , link: Faker::Internet.url, description: Faker::Alphanumeric.alphanumeric(number: 50))
+    Service.create!(name: Faker::Ancient.titan , description: Faker::Alphanumeric.alphanumeric(number: 50))
+    Contact.create!(name: Faker::Name.name, localization: Faker::Address.full_address , email: Faker::Internet.email ,number: Faker::Number.number(digits: 9))
+end
 
-#Fotos membros
+#Criando membros
+30.times do |i|
+    Member.create!(name: Faker::Name.unique.name, age: Faker::Number.between(from: 1, to: 100), office_id: 1)
+end
+
+#Criando associação entre membros e projetos
+30.times do
+    ProjectMember.create!(member_id:(rand(1...30)), project_id: rand(1...30), role: Faker::Company.profession)
+end
+
+#Administrador
+Administrator.create!(name:"admin",email:"admin@admin.com", password:"admin2022")
+
+# Fotos de alguns membros
 Member.find_by(id:1).photo.attach(io: File.open("./public/luffy.jpg"), filename: "luffy.jpg")
 Member.find_by(id:2).photo.attach(io: File.open("./public/zoro.jpg"), filename: "zoro.jpg")
 Member.find_by(id:3).photo.attach(io: File.open("./public/usopp.jpg"), filename: "usopp.jpg")
 Member.find_by(id:4).photo.attach(io: File.open("./public/sanji.jpeg"), filename: "sanji.jpeg") 
 
-#Parcerias
-Partnership.create!(name:"Partnership 1", link:"Partnership 1")
-Partnership.create!(name:"Partnership 2", link:"Partnership 2")
-Partnership.create!(name:"Partnership 3", link:"Partnership 3")
-Partnership.create!(name:"Partnership 4", link:"Partnership 4")
-Partnership.create!(name:"Partnership 5", link:"Partnership 5")
-Partnership.create!(name:"Partnership 6", link:"Partnership 6")
-
-#Imagens Parcerias
+#Imagens de algumas parcerias Parcerias
 Partnership.find_by(id:1).images.attach(io: File.open("./public/nasa.png"), filename: "nasa.png")
 Partnership.find_by(id:1).images.attach(io: File.open("./public/diretornasa.jpeg"), filename: "diretornasa.jpeg")
 Partnership.find_by(id:2).images.attach(io: File.open("./public/google.jpeg"), filename: "google.jpeg")
-Partnership.find_by(id:3).images.attach(io: File.open("./public/meta.png"), filename:"meta.png")
+Partnership.find_by(id:3).images.attach(io: File.open("./public/meta.png"), filename: "meta.png")
 Partnership.find_by(id:4).images.attach(io: File.open("./public/spotify.png"), filename: "spotify.png")
 
-#Projetos
-Project.create!(name:"Project 1", link:"Project 1", description:"Project 1")
-Project.create!(name:"Project 2", link:"Project 2", description:"Project 2")
-Project.create!(name:"Project 3", link:"Project 3", description:"Project 3")
-Project.create!(name:"Project 4", link:"Project 4", description:"Project 4")
-Project.create!(name:"Project 5", link:"Project 5", description:"Project 5")
-Project.create!(name:"Project 6", link:"Project 6", description:"Project 6")
+#Fotos de alguns projetos
+Project.find_by(id:1).photo.attach(io: File.open("./public/pokemon-1.jpg"), filename: "pokemon-1.jpg")
+Project.find_by(id:2).photo.attach(io: File.open("./public/pokemon-2.jpeg"), filename: "pokemon-2.jpeg")
+Project.find_by(id:3).photo.attach(io: File.open("./public/pokemon-3.jpeg"), filename: "pokemon-3.jpeg")
+Project.find_by(id:4).photo.attach(io: File.open("./public/pokemon-4.jpg"), filename: "pokemon-4.jpg")
 
-#Serviços
-Service.create!(name:"Service 1", description:"Service 1")
-Service.create!(name:"Service 2", description:"Service 2")
-Service.create!(name:"Service 3", description:"Service 3")
-Service.create!(name:"Service 4", description:"Service 4")
-Service.create!(name:"Service 5", description:"Service 5")
-Service.create!(name:"Service 6", description:"Service 6")
-
-#Membros dos Projetos
-ProjectMember.create!(member_id:1, project_id:1, role:"Role 1")
-ProjectMember.create!(member_id:2, project_id:2, role:"Role 2")
-ProjectMember.create!(member_id:3, project_id:3, role:"Role 3")
-ProjectMember.create!(member_id:4, project_id:4, role:"Role 4")
-ProjectMember.create!(member_id:5, project_id:5, role:"Role 5")
-ProjectMember.create!(member_id:6, project_id:6, role:"Role 6")
-ProjectMember.create!(member_id:1, project_id:3, role:"Role 7")
-ProjectMember.create!(member_id:1, project_id:4, role:"Role 8")
-ProjectMember.create!(member_id:2, project_id:6, role:"Role 9")
-ProjectMember.create!(member_id:5, project_id:3, role:"Role 10")
-ProjectMember.create!(member_id:6, project_id:2, role:"Role 11")
-ProjectMember.create!(member_id:4, project_id:2, role:"Role 12")
-
-#Administrador
-Administrator.create!(name:"Poderoso Chefão",email:"poderosochefao@poderosochefao.com.br", password:"123456789")
+#Imagens de alguns serviços
+Service.find_by(id:1).images.attach(io: File.open("./public/1.jpeg"), filename: "1.jpeg")
+Service.find_by(id:1).images.attach(io: File.open("./public/2.jpeg"), filename: "2.jpeg")
+Service.find_by(id:2).images.attach(io: File.open("./public/3.jpeg"), filename: "3.jpeg")
+Service.find_by(id:3).images.attach(io: File.open("./public/4.jpeg"), filename: "4.jpeg")
+Service.find_by(id:4).images.attach(io: File.open("./public/5.jpeg"), filename: "5.jpeg")

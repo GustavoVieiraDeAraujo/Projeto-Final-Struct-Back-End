@@ -1,6 +1,6 @@
 class Api::V1::ProjectsController < ApplicationController
 
-    acts_as_token_authentication_handler_for Administrator, only: [:create, :update, :delete]
+    acts_as_token_authentication_handler_for Administrator, only: [:create, :update, :delete, :add_photo]
 
     def index
         projects = Project.all
@@ -17,6 +17,19 @@ class Api::V1::ProjectsController < ApplicationController
         end
     rescue StandardError => e
         render json: e, status: :bad_request
+    end
+
+    def add_photo
+        project = project.find(params[:id])
+        if project.photo.attached?
+            project.photo.purge
+        end
+        params[:photo].each do |photo|
+            project.photo.attach(photo)
+        end
+        render json: project, status: :ok
+    rescue StandardError => e
+        render json: {message: e.message}, status: :bad_request
     end
 
     def show 
@@ -53,6 +66,6 @@ class Api::V1::ProjectsController < ApplicationController
     private
     
     def projects_params 
-        params.require(:project).permit(:name, :link, :description)
+        params.require(:project).permit(:name, :link, :description, :photo)
     end
 end

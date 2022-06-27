@@ -50,3 +50,6 @@ gem 'devise'
 
 # Minimizar informações inuteis
 gem 'active_model_serializers'
+
+# Gerar dados aleatorios
+gem 'faker'
