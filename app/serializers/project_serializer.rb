@@ -1,5 +1,5 @@
 class ProjectSerializer < ActiveModel::Serializer
-  attributes :id, :name, :link ,:description, :members
+  attributes :id, :name, :link , :photo_url, :description, :members
   
   def members 
     array = []
@@ -12,4 +12,11 @@ class ProjectSerializer < ActiveModel::Serializer
     end
     array
   end
+
+  def photo_url
+    if object.photo.attached?
+      rails_blob_path(object.photo, only_path: true)
+    end
+  end
+
 end
