@@ -1,0 +1,14 @@
+# Copie este arquivo para config/application.yml e preencha com seus valores.
+# config/application.yml e ignorado pelo git (veja .gitignore) e e carregado
+# automaticamente pela gem figaro, populando ENV com essas chaves.
+
+development:
+  db_user: postgres
+  db_password: postgres
+
+test:
+  db_user: postgres
+  db_password: postgres
+
+production:
+  STRUCT_PROJETO_FINAL_DATABASE_PASSWORD: ""
