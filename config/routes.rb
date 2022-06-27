@@ -50,6 +50,7 @@ Rails.application.routes.draw do
         get "index_pagination/:page", to: "projects#index_pagination"
         get "show/:id", to: "projects#show"
         post "create", to: "projects#create"
+        post "add_photo/:id", to: "projects#add_photo"
         patch "update/:id", to: "projects#update"
         delete "delete/:id", to: "projects#delete"
       end
@@ -63,6 +64,16 @@ Rails.application.routes.draw do
         patch "update/:id", to: "administrators#update"
         delete "delete/:id", to: "administrators#delete"
       end
+
+      scope "contacts" do
+        get "index", to: "contacts#index"
+        get "index_pagination/:page", to: "contacts#index_pagination"
+        get "show/:id", to: "contacts#show"
+        post "create", to: "contacts#create"
+        patch "update/:id", to: "contacts#update"
+        delete "delete/:id", to: "contacts#delete"
+      end
+      
     end
   end
 end
