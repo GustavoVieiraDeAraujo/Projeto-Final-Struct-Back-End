@@ -14,7 +14,7 @@ end
 
 #Criando membros
 30.times do |i|
-    Member.create!(name: Faker::Name.unique.name, age: Faker::Number.between(from: 1, to: 100), office_id: 1)
+    Member.create!(name: Faker::Name.unique.name, age: Faker::Number.between(from: 1, to: 100), office_id: rand(1...30))
 end
 
 #Criando associação entre membros e projetos
