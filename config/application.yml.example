@@ -5,10 +5,13 @@
 development:
   db_user: postgres
   db_password: postgres
+  CORS_ORIGIN: localhost:3000
 
 test:
   db_user: postgres
   db_password: postgres
+  CORS_ORIGIN: localhost:3000
 
 production:
   STRUCT_PROJETO_FINAL_DATABASE_PASSWORD: ""
+  CORS_ORIGIN: ""
