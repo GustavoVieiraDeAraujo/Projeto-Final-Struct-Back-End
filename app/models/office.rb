@@ -1,4 +1,4 @@
 class Office < ApplicationRecord
     validates :name, :description, presence: true
-    has_many :member, dependent: :destroy
+    has_many :members, dependent: :destroy
 end

@@ -1,6 +1,6 @@
 class Api::V1::ProjectMembersController < ApplicationController
 
-    # acts_as_token_authentication_handler_for Administrator, only: [:create, :update, :delete]
+    acts_as_token_authentication_handler_for Administrator, only: [:create, :update, :delete]
 
     def index
         project_members = ProjectMember.all
