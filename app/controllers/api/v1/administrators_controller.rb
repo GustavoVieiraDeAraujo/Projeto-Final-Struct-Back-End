@@ -5,8 +5,8 @@ class Api::V1::AdministratorsController < ApplicationController
     def login
         admin = Administrator.find_by!(email: params[:email])
         if admin.valid_password?(params[:password])
-            render json: admin, status: :ok
-        else 
+            render json: admin.as_json(only: [:id, :name, :email, :authentication_token]), status: :ok
+        else
             head(:unauthorized)
         end
     rescue StandardError => e
