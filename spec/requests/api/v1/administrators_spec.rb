@@ -2,12 +2,12 @@ require 'rails_helper'
 
 RSpec.describe "Api::V1::Administrators", type: :request do
 
-  describe "GET /login" do
+  describe "POST /login" do
     let(:administrator){create(:administrator)}
 
     context "administrator exists and correct password" do
       it "returns http status OK" do
-        get "/api/v1/administrators/login", params: {
+        post "/api/v1/administrators/login", params: {
           email: administrator.email,
           password: administrator.password
         }
@@ -17,7 +17,7 @@ RSpec.describe "Api::V1::Administrators", type: :request do
 
     context "administrator exists and wrong password" do
       it "returns http status unauthorized" do
-        get "/api/v1/administrators/login", params: {
+        post "/api/v1/administrators/login", params: {
           email: administrator.email,
           password: nil
         }
@@ -27,7 +27,7 @@ RSpec.describe "Api::V1::Administrators", type: :request do
 
     context "administrator doesn't exist" do
       it "returns http status not_found" do
-        get "/api/v1/administrators/login", params: {
+        post "/api/v1/administrators/login", params: {
           email: "vaidarerrado@vaidarerrado.com.br",
           password: nil
         }
@@ -36,12 +36,12 @@ RSpec.describe "Api::V1::Administrators", type: :request do
     end
   end
 
-  describe "GET /logout" do
+  describe "DELETE /logout" do
     let(:administrator){create(:administrator)}
 
     context "logout was successful" do
       it "returns http status OK" do
-        get "/api/v1/administrators/logout", headers: {
+        delete "/api/v1/administrators/logout", headers: {
           "X-Administrator-Email": administrator.email,
           "X-Administrator-Token": administrator.authentication_token
         }
@@ -51,7 +51,7 @@ RSpec.describe "Api::V1::Administrators", type: :request do
 
     context "logout wasn't successful" do
       it "returns http status bad_request" do
-        get "/api/v1/administrators/logout", headers: {
+        delete "/api/v1/administrators/logout", headers: {
           "X-Administrator-Email": nil,
           "X-Administrator-Token": nil
         }
