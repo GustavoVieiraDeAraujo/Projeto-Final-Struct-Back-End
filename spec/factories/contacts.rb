@@ -1,18 +1,13 @@
 FactoryBot.define do
-  
-  sequence :contact_email do |i|
-    "teste#{i}@teste#{i}.com.br"
-  end
 
-  sequence :contact_localization do |j|
-    "Localization #{j}"
+  sequence :contact_email do |i|
+    "contact#{i}contact#{i}.com.br"
   end
 
   factory :contact do
     name { "Contact 1" }
-    localization { generate(:contact_localization) }
     email { generate(:contact_email) }
-    number { 987654321 }
+    about { "Contact 1" }
+    service { create(:service) }
   end
-
 end

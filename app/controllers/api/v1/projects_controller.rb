@@ -20,7 +20,7 @@ class Api::V1::ProjectsController < ApplicationController
     end
 
     def add_photo
-        project = project.find(params[:id])
+        project = Project.find(params[:id])
         if project.photo.attached?
             project.photo.purge
         end
