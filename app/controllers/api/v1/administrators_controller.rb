@@ -38,7 +38,7 @@ class Api::V1::AdministratorsController < ApplicationController
         admin.save!
         render json: admin, status: :created
     rescue StandardError => e
-        render json: e, status: :bad_request
+        render json: {message: e.message}, status: :bad_request
     end
     
     def update
@@ -46,7 +46,7 @@ class Api::V1::AdministratorsController < ApplicationController
         admin.update!(admin_params)
         render json: admin, status: :ok
     rescue StandardError => e
-        render json: e, status: :unprocessable_entity
+        render json: {message: e.message}, status: :unprocessable_entity
     end
 
     def delete
@@ -54,7 +54,7 @@ class Api::V1::AdministratorsController < ApplicationController
         admin.destroy!
         render json: {message: "Administrador #{admin.name} deletado com sucesso"}, status: :ok
     rescue StandardError => e
-        render json: e , status: :bad_request
+        render json: {message: e.message}, status: :bad_request
     end
 
     private

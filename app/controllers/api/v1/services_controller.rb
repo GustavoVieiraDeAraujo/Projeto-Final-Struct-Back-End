@@ -16,7 +16,7 @@ class Api::V1::ServicesController < ApplicationController
             return render json: services, status: :ok
         end
     rescue StandardError => e
-        render json: e, status: :bad_request
+        render json: {message: e.message}, status: :bad_request
     end
 
     def add_images
@@ -51,7 +51,7 @@ class Api::V1::ServicesController < ApplicationController
         service.save!
         render json: service, status: :created
     rescue StandardError => e
-        render json: e, status: :bad_request
+        render json: {message: e.message}, status: :bad_request
     end
 
     def update
@@ -59,7 +59,7 @@ class Api::V1::ServicesController < ApplicationController
         service.update!(services_params)
         render json: service, status: :ok
     rescue StandardError => e
-        render json: e, status: :unprocessable_entity
+        render json: {message: e.message}, status: :unprocessable_entity
     end
 
     def delete
@@ -67,7 +67,7 @@ class Api::V1::ServicesController < ApplicationController
         service.destroy!
         render json: {message: "Serviço #{service.name} deletado com sucesso"}, status: :ok
     rescue StandardError => e
-        render json: e , status: :bad_request
+        render json: {message: e.message}, status: :bad_request
     end
 
     private

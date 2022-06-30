@@ -16,7 +16,7 @@ class Api::V1::ProjectMembersController < ApplicationController
             return render json: project_members, status: :ok
         end
     rescue StandardError => e
-        render json: e, status: :bad_request
+        render json: {message: e.message}, status: :bad_request
     end
 
     def show 
@@ -31,7 +31,7 @@ class Api::V1::ProjectMembersController < ApplicationController
         project_member.save!
         render json: project_member, status: :created
     rescue StandardError => e
-        render json: e, status: :bad_request
+        render json: {message: e.message}, status: :bad_request
     end
 
     def update
@@ -39,7 +39,7 @@ class Api::V1::ProjectMembersController < ApplicationController
         project_member.update!(projectmembers_params )
         render json: project_member, status: :ok
     rescue StandardError => e
-        render json: e, status: :unprocessable_entity
+        render json: {message: e.message}, status: :unprocessable_entity
     end
 
     def delete
@@ -47,7 +47,7 @@ class Api::V1::ProjectMembersController < ApplicationController
         project_member.destroy!
         render json: {message: "Deleção concluida com sucesso"}, status: :ok
     rescue StandardError => e
-        render json: e , status: :bad_request
+        render json: {message: e.message}, status: :bad_request
     end
 
     private

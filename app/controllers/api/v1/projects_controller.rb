@@ -16,7 +16,7 @@ class Api::V1::ProjectsController < ApplicationController
             return render json: projects, status: :ok
         end
     rescue StandardError => e
-        render json: e, status: :bad_request
+        render json: {message: e.message}, status: :bad_request
     end
 
     def add_photo
@@ -44,7 +44,7 @@ class Api::V1::ProjectsController < ApplicationController
         project.save!
         render json: project, status: :created
     rescue StandardError => e
-        render json: e, status: :bad_request
+        render json: {message: e.message}, status: :bad_request
     end
 
     def update
@@ -52,7 +52,7 @@ class Api::V1::ProjectsController < ApplicationController
         project.update!(projects_params )
         render json: project, status: :ok
     rescue StandardError => e
-        render json: e, status: :unprocessable_entity
+        render json: {message: e.message}, status: :unprocessable_entity
     end
 
     def delete
@@ -60,7 +60,7 @@ class Api::V1::ProjectsController < ApplicationController
         project.destroy!
         render json: {message: "Projeto #{project.name} deletado com sucesso"}, status: :ok
     rescue StandardError => e
-        render json: e , status: :bad_request
+        render json: {message: e.message}, status: :bad_request
     end
 
     private

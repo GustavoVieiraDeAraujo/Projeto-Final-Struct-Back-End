@@ -16,14 +16,14 @@ class Api::V1::ContactsController < ApplicationController
             return render json: contacts, status: :ok
         end
     rescue StandardError => e
-        render json: e, status: :bad_request
+        render json: {message: e.message}, status: :bad_request
     end
 
     def show 
         contact = Contact.find(params[:id])
         render json: contact, status: :ok
     rescue StandardError => e
-        render json: e, status: :not_found
+        render json: {message: e.message}, status: :not_found
     end
 
     def create 
@@ -31,7 +31,7 @@ class Api::V1::ContactsController < ApplicationController
         contact.save!
         render json: contact, status: :created
     rescue StandardError => e
-        render json: e, status: :bad_request
+        render json: {message: e.message}, status: :bad_request
     end
     
     def update
@@ -39,7 +39,7 @@ class Api::V1::ContactsController < ApplicationController
         contact.update!(contacts_params)
         render json: contact, status: :ok
     rescue StandardError => e
-        render json: e, status: :unprocessable_entity
+        render json: {message: e.message}, status: :unprocessable_entity
     end
 
     def delete
@@ -47,7 +47,7 @@ class Api::V1::ContactsController < ApplicationController
         contact.destroy!
         render json: {message: "Contato #{contact.name} deletado com sucesso"}, status: :ok
     rescue StandardError => e
-        render json: e , status: :bad_request
+        render json: {message: e.message}, status: :bad_request
     end
 
     private
