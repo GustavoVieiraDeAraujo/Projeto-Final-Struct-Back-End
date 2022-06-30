@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_26_214541) do
+ActiveRecord::Schema.define(version: 2022_06_28_020348) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,11 +60,12 @@ ActiveRecord::Schema.define(version: 2022_06_26_214541) do
 
   create_table "contacts", force: :cascade do |t|
     t.string "name"
-    t.string "localization"
     t.string "email"
-    t.integer "number"
+    t.string "about"
+    t.bigint "service_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["service_id"], name: "index_contacts_on_service_id"
   end
 
   create_table "members", force: :cascade do |t|
@@ -117,6 +118,7 @@ ActiveRecord::Schema.define(version: 2022_06_26_214541) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "contacts", "services"
   add_foreign_key "members", "offices"
   add_foreign_key "project_members", "members"
   add_foreign_key "project_members", "projects"

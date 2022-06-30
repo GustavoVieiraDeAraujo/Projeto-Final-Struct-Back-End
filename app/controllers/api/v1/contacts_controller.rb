@@ -1,7 +1,7 @@
 class Api::V1::ContactsController < ApplicationController
 
-    acts_as_token_authentication_handler_for Administrator, only: [:create, :update, :delete]
-
+    acts_as_token_authentication_handler_for Administrator, only: [:delete, :update]
+    
     def index
         contacts = Contact.all
         render json: contacts, status: :ok
@@ -53,6 +53,6 @@ class Api::V1::ContactsController < ApplicationController
     private
 
     def contacts_params 
-        params.require(:contact).permit(:name, :localization, :email, :number)
+        params.require(:contact).permit(:name, :email, :about, :service_id)
     end
 end

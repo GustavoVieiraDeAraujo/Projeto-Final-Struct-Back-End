@@ -21,8 +21,9 @@ RSpec.describe "Api::V1::Contacts", type: :request do
 
   describe "GET /index_pagination" do
 
-    before do 
-      create(:contact, id: 999, name:"Contact 1", localization:"Localization 1", email:"teste2022@teste2022.com.br", number:987654321)
+    before do
+      create(:service, id: 999 , name:"Serviço 1", description:"Serviço 1")
+      create(:contact, id: 999 , name:"Contact 1", id:999, email:"teste2022@teste2022.com.br", about:"Teste2022" , service_id: 999)
     end
 
     context "page valid" do
@@ -52,7 +53,6 @@ RSpec.describe "Api::V1::Contacts", type: :request do
     let(:contact){create(:contact)}
 
     context "id valid" do
-      let(:contact){create(:contact)}
       it "returns http status OK" do
         get "/api/v1/contacts/show/#{contact.id}"
         expect(response).to have_http_status(:ok)
@@ -76,17 +76,14 @@ RSpec.describe "Api::V1::Contacts", type: :request do
   end   
   
   describe "POST /create" do
-    let(:administrator) {create(:administrator)}
+    let(:service){create(:service)}
     let(:contacts_params) do
-      {name:"Contact 1", localization:"Localization 1", email:"teste2022@teste2022.com.br", number:987654321}
+      {name:"Contact 1", email:"teste2022@teste2022.com.br", about:"Teste2022" , service_id: service.id}
     end
 
     context "params are valid" do
       it "returns http status created" do
-        post "/api/v1/contacts/create", params: {contact: contacts_params}, headers:{
-          "X-Administrator-Email": administrator.email,
-          "X-Administrator-Token": administrator.authentication_token
-        }
+        post "/api/v1/contacts/create", params: {contact: contacts_params}
         expect(response).to have_http_status(:created)
       end
     end
@@ -94,10 +91,7 @@ RSpec.describe "Api::V1::Contacts", type: :request do
     context "params aren't valid" do
       it "returns http status bad_request" do
         contacts_params = nil
-        post "/api/v1/contacts/create", params: {contact: contacts_params}, headers:{
-          "X-Administrator-Email": administrator.email,
-          "X-Administrator-Token": administrator.authentication_token
-        }
+        post "/api/v1/contacts/create", params: {contact: contacts_params}
         expect(response).to have_http_status(:bad_request)
       end
     end
@@ -106,9 +100,10 @@ RSpec.describe "Api::V1::Contacts", type: :request do
 
   describe "PATCH /update" do
     let(:administrator) {create(:administrator)}
+    let(:service){create(:service)}
     let(:contact){create(:contact)}
     let(:contacts_params) do 
-      {name:"Contact 1", localization:"Localization 1", email:"teste2022@teste2022.com.br", number:987654321}
+      {name:"Contact 1", email:"teste2022@teste2022.com.br", about:"Teste2022" , service_id: service.id}
     end
     
     context "params are valid" do

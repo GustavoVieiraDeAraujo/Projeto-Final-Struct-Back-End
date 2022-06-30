@@ -73,6 +73,15 @@ Rails.application.routes.draw do
         patch "update/:id", to: "contacts#update"
         delete "delete/:id", to: "contacts#delete"
       end
+
+      scope "project_members" do
+        get "index", to: "project_members#index"
+        get "index_pagination/:page", to: "project_members#index_pagination"
+        get "show/:id", to: "project_members#show"
+        post "create", to: "project_members#create"
+        patch "update/:id", to: "project_members#update"
+        delete "delete/:id", to: "project_members#delete"
+      end
       
     end
   end

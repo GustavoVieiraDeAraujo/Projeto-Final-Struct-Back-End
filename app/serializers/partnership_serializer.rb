@@ -1,5 +1,6 @@
 class PartnershipSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
+  
   attributes :id, :name, :link , :images_url
 
   def images_url

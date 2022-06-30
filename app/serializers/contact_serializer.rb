@@ -1,3 +1,6 @@
 class ContactSerializer < ActiveModel::Serializer
-    attributes :id, :name, :localization, :email, :number
+    include Rails.application.routes.url_helpers
+
+    attributes :id, :name, :email, :about, :service
+    has_many :service
 end

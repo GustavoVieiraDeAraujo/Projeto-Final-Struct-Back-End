@@ -42,35 +42,19 @@ RSpec.describe Contact, type: :model do
 
   end
 
-  describe "localization" do
+  describe "about" do
   
-    context "when contact hasn't localization" do
+    context "when contact hasn't about" do
       it "is not valid" do
-        expect(build(:contact, localization: nil)).to be_invalid
+        expect(build(:contact, about: nil)).to be_invalid
       end
     end
 
-    context "when contact has localization" do
+    context "when contact has about" do
       it "is valid" do
         expect(build(:contact)).to be_valid
       end
     end
 
   end
-
-  describe "number" do
-  
-    context "when contact hasn't number" do
-      it "is not valid" do
-        expect(build(:contact, number: nil)).to be_invalid
-      end
-    end
-
-    context "when contact has number" do
-      it "is valid" do
-        expect(build(:contact)).to be_valid
-      end
-    end
-  end
-  
 end
