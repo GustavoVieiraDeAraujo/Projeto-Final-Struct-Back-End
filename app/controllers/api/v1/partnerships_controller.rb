@@ -31,9 +31,7 @@ class Api::V1::PartnershipsController < ApplicationController
 
     def delete_all_images
         partnership = Partnership.find(params[:id])
-        partnership.images.each do |image|
-            partnership.images.purge(image)
-        end
+        partnership.images.purge
         render json: partnership, status: :ok
     rescue StandardError => e
         render json: {message: e.message}, status: :bad_request

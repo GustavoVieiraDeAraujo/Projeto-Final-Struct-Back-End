@@ -21,12 +21,8 @@ class Api::V1::MembersController < ApplicationController
 
     def add_photo
         member = Member.find(params[:id])
-        if member.photo.attached?
-            member.photo.purge
-        end
-        params[:photo].each do |photo|
-            member.photo.attach(photo)
-        end
+        member.photo.purge if member.photo.attached?
+        member.photo.attach(params[:photo])
         render json: member, status: :ok
     rescue StandardError => e
         render json: {message: e.message}, status: :bad_request

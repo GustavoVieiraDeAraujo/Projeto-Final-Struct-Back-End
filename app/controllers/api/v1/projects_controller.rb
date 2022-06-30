@@ -21,12 +21,8 @@ class Api::V1::ProjectsController < ApplicationController
 
     def add_photo
         project = Project.find(params[:id])
-        if project.photo.attached?
-            project.photo.purge
-        end
-        params[:photo].each do |photo|
-            project.photo.attach(photo)
-        end
+        project.photo.purge if project.photo.attached?
+        project.photo.attach(params[:photo])
         render json: project, status: :ok
     rescue StandardError => e
         render json: {message: e.message}, status: :bad_request

@@ -31,9 +31,7 @@ class Api::V1::ServicesController < ApplicationController
 
     def delete_all_images
         service = Service.find(params[:id])
-        service.images.each do |image|
-            service.images.purge(image)
-        end
+        service.images.purge
         render json: service, status: :ok
     rescue StandardError => e
         render json: {message: e.message}, status: :bad_request
