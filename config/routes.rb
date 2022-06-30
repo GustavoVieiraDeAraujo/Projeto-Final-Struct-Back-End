@@ -56,8 +56,8 @@ Rails.application.routes.draw do
       end
 
       scope "administrators" do
-        get "login", to: "administrators#login"
-        get "logout", to: "administrators#logout"
+        post "login", to: "administrators#login"
+        delete "logout", to: "administrators#logout"
         get "index", to: "administrators#index"
         get "show/:id", to: "administrators#show"
         post "create", to: "administrators#create"
